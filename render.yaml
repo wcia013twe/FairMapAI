@@ -3,7 +3,6 @@ databases:
     plan: free
     databaseName: census
     user: wc
-    password: 2004
 
 services:
   - type: web
