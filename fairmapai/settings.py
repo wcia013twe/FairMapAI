@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'fairmapai.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgresql://postgres:postgres@localhost:5432/censusdb',
+        default='postgresql://wc:2004@localhost:5432/census',
         conn_max_age=600
     )
 }
