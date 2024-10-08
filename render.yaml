@@ -1,8 +1,9 @@
 databases:
   - name: censusdb
     plan: free
-    databaseName: mysite
-    user: mysite
+    databaseName: census
+    user: wc
+    password: 2004
 
 services:
   - type: web
