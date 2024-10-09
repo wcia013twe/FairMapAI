@@ -37,6 +37,7 @@ if RENDER_EXTERNAL_HOSTNAME:
 # Application definition
 
 INSTALLED_APPS = [
+
     'homepage.apps.HomepageConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -44,6 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #custom apps
+    'censusapi',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
