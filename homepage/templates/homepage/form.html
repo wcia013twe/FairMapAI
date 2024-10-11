@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geospatial Data Form</title>
+    {% load static %}
+</head>
+<body>
+    <h1>Geospatial Data Form</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if data %}
+        <h2>Results</h2>
+        <pre>{{ data|safe }}</pre>
+    {% endif %}
+
+    {% if map_image %}
+        <h2>District Boundary Map</h2>
+        <img src="{% static 'homepage/district_boundary.png' %}" alt="District Boundary Map">
+    {% endif %}
+</body>
+</html>
