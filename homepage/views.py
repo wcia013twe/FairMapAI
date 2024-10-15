@@ -13,6 +13,7 @@ def form(request):
     form = QueryForm()
     gdf = None
     map_image = None  # Initialize variable to store map image path
+    data = None
 
     if request.method == 'POST':
         form = QueryForm(request.POST)
@@ -24,16 +25,16 @@ def form(request):
             data = client.get("imsf-b5s7", statefp=statefp, cd116fp=cd116fp)
 
             # extract the GeoJSON from the data
-            # Step 2: Iterate through each feature (if there are multiple)
-            feature = data['features']
-                # Step 3: Access the 'geometry' field
-            geometry = feature['geometry']
+            # # Step 2: Iterate through each feature (if there are multiple)
+            # feature = data['features']
+            #     # Step 3: Access the 'geometry' field
+            # geometry = feature['geometry']
                 
-            # Step 4: Extract the 'coordinates' from the 'geometry'
-            coordinates = geometry['coordinates']
+            # # Step 4: Extract the 'coordinates' from the 'geometry'
+            # coordinates = geometry['coordinates']
             
-            # Print the extracted coordinates
-            print("Extracted Coordinates:", coordinates)
+            # # Print the extracted coordinates
+            # print("Extracted Coordinates:", coordinates)
 
             # geometry=shape(the_geom)
 

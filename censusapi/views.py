@@ -32,7 +32,7 @@ import requests
 @api_view(['GET', 'POST'])
 def state_list(request, format=None):
 
-    #get all the drinks
+    #get all the states
     #serialize
     #return json
     if request.method == 'GET':
