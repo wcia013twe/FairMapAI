@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     #custom apps
-    'censusapi',
+    # 'censusapi',
     'rest_framework',
 ]
 

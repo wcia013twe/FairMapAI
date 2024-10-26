@@ -15,10 +15,15 @@
         <button type="submit">Submit</button>
     </form>
 
-    {% if data %}
+    {% if data_table %}
+        <h2>Table Results</h2>
+        <pre>{{ data_table | safe }}</pre>
+    {% endif %}
+
+    <!-- {% if data %}
         <h2>Results</h2>
         <pre>{{ data|safe }}</pre>
-    {% endif %}
+    {% endif %} -->
 
     {% if map_image %}
         <h2>District Boundary Map</h2>
