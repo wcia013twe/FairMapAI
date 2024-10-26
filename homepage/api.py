@@ -16,3 +16,21 @@ def printTable(data):
 
     return data_table
 
+def drawMap(data):
+
+    data_df = None
+
+    # Convert the fetched data to a DataFrame and drop the geom
+    data_df = pd.DataFrame.from_records(data)
+    # Create a GeoDataFrame from the_geom
+    gdf = gpd.GeoDataFrame(data_df, geometry=data_df["the_geom"].apply(shape))
+
+    # Plot the map and save it as an image
+    fig, ax = plt.subplots(1, 1, figsize=(10, 10))
+    gdf.plot(ax=ax, color='blue', edgecolor='black')
+    map_image_path = 'homepage/static/homepage/district_map.png'
+    plt.savefig(map_image_path)
+    plt.close(fig)  # Close the plot to release memory
+
+    map_image = 'homepage/district_map.png'  # Relative path for template
+
