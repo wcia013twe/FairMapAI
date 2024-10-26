@@ -16,22 +16,30 @@ def printTable(data):
 
     return data_table
 
-def drawMap(data):
+def drawMap(state_data, target_id):
 
     try:
         # Convert data to DataFrame
-        data_df = pd.DataFrame.from_records(data)
+        state_gdf = pd.DataFrame.from_records(state_data)
 
         # Check if 'the_geom' column exists
-        if "the_geom" not in data_df.columns:
+        if "the_geom" not in state_gdf.columns:
             raise ValueError("The 'the_geom' column is missing from the data.")
+        
+        # Filter the target district using the provided ID (assuming 'cd116fp' is the column)
+        target_district = state_gdf[state_gdf['cd116fp'] == target_id]
 
-        # Create GeoDataFrame using the 'the_geom' column
-        gdf = gpd.GeoDataFrame(data_df, geometry=data_df["the_geom"].apply(shape))
+        # Plot the map
+        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+        
+        # Plot all districts with light gray outlines
+        state_gdf.boundary.plot(ax=ax, color='black', linewidth=0.5, alpha=0.3)
 
-        # Plot the map and save it as an image
-        fig, ax = plt.subplots(1, 1, figsize=(5, 5))
-        gdf.plot(ax=ax, color='blue', edgecolor='black')
+        # Highlight the specific district in red
+        if not target_district.empty:
+            target_district.plot(ax=ax, color='red', edgecolor='black', linewidth=1, alpha=0.7)
+        else:
+            print(f"No district found with ID '{target_id}'.")
 
         # Save the image to the static folder
         map_image_path = 'homepage/static/homepage/district_map.png'

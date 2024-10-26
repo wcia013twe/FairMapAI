@@ -19,9 +19,10 @@ def form(request):
             cd116fp = str(form.cleaned_data['cd116fp']).zfill(2)  # Format to 01 if single digit
             # Fetching data from Socrata API
             data = client.get("imsf-b5s7", statefp=statefp, cd116fp=cd116fp)
+            state_data = client.get("imsf-b5s7", statefp=statefp)
 
             data_table = printTable(data)
-            map_path = drawMap(data)
+            map_path = drawMap(state_data, cd116fp)
 
     # Render the template with the necessary context
     return render(request, 'homepage/form.html', {
