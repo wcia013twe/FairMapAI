@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geospatial Data Form</title>
     {% load static %}
+    <!-- <style>
+        .image{background-image: url("{% static 'homepage/district_map.png' %}");}
+    </style> -->
 </head>
 <body>
     <h1>Geospatial Data Form</h1>
@@ -20,14 +23,13 @@
         <pre>{{ data_table | safe }}</pre>
     {% endif %}
 
-    <!-- {% if data %}
-        <h2>Results</h2>
-        <pre>{{ data|safe }}</pre>
-    {% endif %} -->
-
-    {% if map_image %}
+    {% if map_path %}
         <h2>District Boundary Map</h2>
-        <img src="{% static 'homepage/district_boundary.png' %}" alt="District Boundary Map">
+        <div class="image">
+            <img src="{% static 'homepage/district_map.png' %}" alt="My image">
+        </div>
+    {% else %}
+        <p>Map generation failed or is not available.</p>
     {% endif %}
 </body>
 </html>

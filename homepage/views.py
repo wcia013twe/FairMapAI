@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from homepage.forms import QueryForm
 from sodapy import Socrata
-import matplotlib.pyplot as plt  # Import matplotlib for plotting
-import shapely as shape
-from homepage.api import printTable
+from homepage.api import drawMap, printTable
 
 def index(request):
     return render(request, 'homepage/index.html', {})
@@ -12,7 +10,7 @@ def form(request):
     client = Socrata("data.ojp.usdoj.gov", 'MKr6oLp394fqNbl1acAjZSer0')
     form = QueryForm()
     data_table = None
-
+    map_path = None
 
     if request.method == 'POST':
         form = QueryForm(request.POST)
@@ -23,9 +21,10 @@ def form(request):
             data = client.get("imsf-b5s7", statefp=statefp, cd116fp=cd116fp)
 
             data_table = printTable(data)
+            map_path = drawMap(data)
 
     # Render the template with the necessary context
     return render(request, 'homepage/form.html', {
         'form': form, 
         'data_table': data_table,
-        'data': data})
+        'map_path': map_path})
