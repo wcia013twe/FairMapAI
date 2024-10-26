@@ -19,19 +19,23 @@ def printTable(data):
 def drawMap(state_data, target_id):
 
     try:
-        # Convert data to DataFrame
-        state_gdf = pd.DataFrame.from_records(state_data)
+        # Convert the data into a DataFrame and create a GeoDataFrame
+        state_df = pd.DataFrame.from_records(state_data)
 
         # Check if 'the_geom' column exists
-        if "the_geom" not in state_gdf.columns:
+        if "the_geom" not in state_df.columns:
             raise ValueError("The 'the_geom' column is missing from the data.")
         
+        # Convert 'the_geom' column into geometries and create a GeoDataFrame
+        state_df['geometry'] = state_df['the_geom'].apply(shape)
+        state_gdf = gpd.GeoDataFrame(state_df, geometry='geometry')
+
         # Filter the target district using the provided ID (assuming 'cd116fp' is the column)
         target_district = state_gdf[state_gdf['cd116fp'] == target_id]
 
         # Plot the map
         fig, ax = plt.subplots(1, 1, figsize=(8, 8))
-        
+
         # Plot all districts with light gray outlines
         state_gdf.boundary.plot(ax=ax, color='black', linewidth=0.5, alpha=0.3)
 
@@ -41,15 +45,15 @@ def drawMap(state_data, target_id):
         else:
             print(f"No district found with ID '{target_id}'.")
 
-        # Save the image to the static folder
+        # Save the map to the static folder
         map_image_path = 'homepage/static/homepage/district_map.png'
         plt.savefig(map_image_path, bbox_inches='tight', pad_inches=1)
         plt.close(fig)  # Release memory
 
         # Return the relative path for template rendering
         return 'homepage/district_map.png'
-   
+
     except Exception as e:
-            print(f"Error drawing map: {e}")
-            return None  # Return None if the map generation fails
+        print(f"Error drawing map: {e}")
+        return None  # Return None if the map generation fails
 
