@@ -22,10 +22,12 @@ def form(request):
             state_data = client.get("imsf-b5s7", statefp=statefp)
 
             data_table = printTable(data)
-            map_path = drawMap(state_data, cd116fp)
+            map_paths = drawMap(state_data, cd116fp)
 
     # Render the template with the necessary context
     return render(request, 'homepage/form.html', {
         'form': form, 
         'data_table': data_table,
-        'map_path': map_path})
+        'default_map': map_paths['default_map'] if map_paths else None,
+        'zoomed_map': map_paths['zoomed_map'] if map_paths else None
+    })

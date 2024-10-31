@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Geospatial Data Form</title>
+    <style>
+        .map-container {
+            margin-top: 20px;
+        }
+        .map-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <script>
+        function zoomIn() {
+            document.getElementById('district-map').src = "{{ zoomed_map }}";
+        }
+
+        function resetMap() {
+            document.getElementById('district-map').src = "{{ default_map }}";
+        }
+    </script>
     {% load static %}
-    <!-- <style>
-        .image{background-image: url("{% static 'homepage/district_map.png' %}");}
-    </style> -->
+    
 </head>
 <body>
     <h1>Geospatial Data Form</h1>
@@ -23,13 +39,25 @@
         <pre>{{ data_table | safe }}</pre>
     {% endif %}
 
-    {% if map_path %}
+    <div class="map-container">
+        <h2>District Map</h2>
+        {% if default_map %}
+            <img id="district-map" src="{{ default_map }}" alt="District Map">
+            <div>
+                <button onclick="zoomIn()">Zoom In</button>
+                <button onclick="resetMap()">Reset View</button>
+            </div>
+        {% else %}
+            <p>No map available.</p>
+        {% endif %}
+    </div>
+    <!-- {% if map_path %}
         <h2>District Boundary Map</h2>
         <div class="image">
             <img src="{% static 'homepage/district_map.png' %}" alt="My image">
         </div>
     {% else %}
         <p>Map generation failed or is not available.</p>
-    {% endif %}
+    {% endif %} -->
 </body>
 </html>

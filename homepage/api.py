@@ -34,7 +34,7 @@ def drawMap(state_data, target_id):
         target_district = state_gdf[state_gdf['cd116fp'] == target_id]
 
         # Plot the map
-        fig, ax = plt.subplots(1, 1, figsize=(8, 8))
+        fig, ax = plt.subplots(1, 1, figsize=(5, 5))
 
         # Plot all districts with light gray outlines
         state_gdf.boundary.plot(ax=ax, color='black', linewidth=0.5, alpha=0.3)
@@ -42,16 +42,33 @@ def drawMap(state_data, target_id):
         # Highlight the specific district in red
         if not target_district.empty:
             target_district.plot(ax=ax, color='red', edgecolor='black', linewidth=1, alpha=0.7)
+
         else:
             print(f"No district found with ID '{target_id}'.")
 
         # Save the map to the static folder
-        map_image_path = 'homepage/static/homepage/district_map.png'
+        map_image_path = 'homepage/static/homepage/district_map_default.png'
         plt.savefig(map_image_path, bbox_inches='tight', pad_inches=1)
+
+        # Now generate the zoomed-in map
+        if not target_district.empty:
+            minx, miny, maxx, maxy = target_district.total_bounds
+            ax.set_xlim(minx - 0.2, maxx + 0.2)
+            ax.set_ylim(miny - 0.2, maxy + 0.2)
+
+        # Save the zoomed-in map
+        zoomed_map_path = 'homepage/static/homepage/district_map_zoomed.png'
+        plt.savefig(zoomed_map_path, bbox_inches='tight', pad_inches=0)
+
         plt.close(fig)  # Release memory
 
+
         # Return the relative path for template rendering
-        return 'homepage/district_map.png'
+        return {
+            'default_map': '/static/homepage/district_map_default.png',
+            'zoomed_map': '/static/homepage/district_map_zoomed.png'
+        }
+        # return 'homepage/district_map.png'
 
     except Exception as e:
         print(f"Error drawing map: {e}")
