@@ -12,6 +12,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+import environ
+
+env = environ.Env()
+environ.Env.read_env()  # Reads .env file
+
+# Accessing the SOCRATA_KEY from the environment variable
+SOCRATA_KEY = env('SOCRATA_KEY')
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -91,7 +99,7 @@ WSGI_APPLICATION = 'fairmapai.wsgi.application'
 DATABASES = {
     'default': dj_database_url.config(
         # Replace this value with your local database's connection string.
-        default='postgres://u8nc01bumcfrpf:p1685f971b4e3e6b649fe0220157c32e4566e8587c67d97c1aa2e9d698a3f4e5e@c8lj070d5ubs83.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d98f5bvpuj6t0o',
+        default=env('DATABASE_URL'),
         conn_max_age=600
     )
 }

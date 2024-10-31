@@ -1,13 +1,15 @@
 from django.shortcuts import render
+from django.conf import settings
 from homepage.forms import QueryForm
 from sodapy import Socrata
 from homepage.api import drawMap, printTable
+
 
 def index(request):
     return render(request, 'homepage/index.html', {})
 
 def form(request):
-    client = Socrata("data.ojp.usdoj.gov", 'MKr6oLp394fqNbl1acAjZSer0')
+    client = Socrata("data.ojp.usdoj.gov", settings.SOCRATA_KEY)
     form = QueryForm()
     data_table = None
     map_path = None

@@ -1,0 +1,6 @@
+# Ignore virtual environment folder
+venv/
+.venv/
+
+# Ignore shell script files
+*.sh
